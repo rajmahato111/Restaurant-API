@@ -48,7 +48,6 @@ router.post(
 router.put('/:id', auth, async (req, res) => {
     const {Cuisine,Non_veg,image,Time_to_Cook,price} = req.body;
   
-    // Build contact object
     const mealFields = {};
     if (Cuisine) mealFields.Cuisine = Cuisine;
     if (Non_veg) mealFields.Non_veg = Non_veg;

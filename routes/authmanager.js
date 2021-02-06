@@ -8,9 +8,6 @@ const {check, validationResult} = require('express-validator');
 
 const Manager=require('../models/Manager')
 
-// @route     GET api/auth
-// @desc      Get logged in manager
-// @access    Private
 router.get('/', auth, async (req, res) => {
   try {
     const manager = await Manager.findById(req.manager.id).select('-password');
@@ -21,9 +18,6 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route     POST api/auth
-// @desc      Auth manager & get token
-// @access    Public
 router.post(
   '/',
   [
