@@ -7,7 +7,9 @@ const {check, validationResult} = require('express-validator');
 
 const Dish = require('../models/Dish');
 
-
+// @route     GET api/dish detail
+// @desc      Get all dish detail
+// @access    Private
 router.get('/', auth, async (req, res) => {
     try {
       const dish = await Dish.find({Cuisine:"Indian"})
@@ -18,6 +20,9 @@ router.get('/', auth, async (req, res) => {
     }
   });
 
+// @route     POST api/dish
+// @desc      Add new dish detail
+// @access    Private
 router.post(
     '/',
     async (req, res) => {

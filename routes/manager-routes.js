@@ -7,16 +7,11 @@ const Manager = require('../models/Manager');
 const Meal1 = require('../models/Meal1');
 
 
-router.get('/', auth, async (req, res) => {
-    try {
-      const meal1 = await Meal1.find({Cuisine:"jaskl"})
-      res.json(meal1);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  });
 
+
+// @route     POST api/meal
+// @desc      Add new meal
+// @access    Private
 router.post(
     '/',
     async (req, res) => {
@@ -44,10 +39,13 @@ router.post(
     }
   },
 );
+// @route     PUT api/meal
+// @desc      update new meal
+// @access    Private
 
 router.put('/:id', auth, async (req, res) => {
     const {Cuisine,Non_veg,image,Time_to_Cook,price} = req.body;
-  
+   // Build meal object
     const mealFields = {};
     if (Cuisine) mealFields.Cuisine = Cuisine;
     if (Non_veg) mealFields.Non_veg = Non_veg;
@@ -72,6 +70,9 @@ router.put('/:id', auth, async (req, res) => {
     }
   });
 
+// @route     DELETE api/meal/:id
+// @desc      meal contact
+// @access    Private
 
   router.delete('/:id', auth, async (req, res) => {
     try {

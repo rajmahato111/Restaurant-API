@@ -7,7 +7,9 @@ const {check, validationResult} = require('express-validator');
 
 const Manager = require('../models/Manager');
 
-
+// @route     POST api/manager
+// @desc      Regiter a manager
+// @access    Public
 router.post(
   '/',
   [

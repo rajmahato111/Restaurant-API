@@ -6,6 +6,10 @@ const User = require('../models/Manager');
 const Meal1 = require('../models/Meal1');
 const Dish = require('../models/Dish');
 
+// @route     GET api/meal 
+// @desc      Get all meal 
+// @access    Private
+
 router.get('/', auth, async (req, res) => {
     try {
       const meal1 = await Meal1.find({Cuisine:"Indian"})
@@ -16,6 +20,9 @@ router.get('/', auth, async (req, res) => {
     }
   });
 
+// @route     GET api/dish detail
+// @desc      Get all dish detail
+// @access    Private
 
   router.get('/dish_dtl', auth, async (req, res) => {
     try {

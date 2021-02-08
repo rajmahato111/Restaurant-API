@@ -39,25 +39,56 @@ recur(output, 0, str);
 
 //Coding Question 2:
 
-function maxProfitWithKTrans(prices, k) {
-    if (!prices.length) return 0;
-    const profits = [];
-    for (let t = 0; t < k + 1; t++) {
-      const row = new Array(prices.length).fill(0);
-      profits.push(row);
+// Function to find the maximum
+// profit with two transactions
+// on a given list of stock prices
+function maxProfit( price,  n)
+{
+    var buy1, profit1, buy2, profit2;
+ 
+    // Set initial buying values to
+    // Integer.MAX_VALUE as we want to 
+    // minimize it
+    buy1 = buy2 = Number.MAX_VALUE;
+ 
+    // Set initial selling values to
+    // zero as we want to maximize it
+    profit1 = profit2 = 0;
+ 
+    for(let i = 0; i < n; i++) 
+    {
+        // Money lent to buy the stock
+        // should be minimum as possible.
+        // buy1 tracks the minimum possible
+        // stock to buy from 0 to i-1.
+        buy1 = Math.min(buy1, price[i]);
+ 
+        // Profit after selling a stock
+        // should be maximum as possible.
+        // profit1 tracks maximum possible
+        // profit we can make from 0 to i-1.
+        profit1 = Math.max(profit1, price[i] - buy1);
+ 
+        // Now for buying the 2nd stock,
+        // we will integrate profit made
+        // from selling the 1st stock
+        buy2 = Math.min(buy2, price[i] - profit1);
+ 
+        // Profit after selling a 2 stocks
+        // should be maximum as possible.
+        // profit2 tracks maximum possible
+        // profit we can make from 0 to i-1.
+        profit2 = Math.max(profit2, price[i] - buy2);
     }
-    for (let t = 1; t < k + 1; t++) {
-      let maxSoFar = -Infinity;
-      for (let d = 1; d < prices.length; d++) {
-        maxSoFar = Math.max(maxSoFar, profits[t - 1][d - 1] - prices[d - 1]);
-        profits[t][d] = Math.max(profits[t][d - 1], maxSoFar + prices[d]);
-      }
-    }
-    return profits[k][prices.length - 1];
-  }
-  
-  const maxprofit = maxProfitWithKTrans([7, 2, 4, 8, 7], 2);
-  console.log(maxprofit);
-  
-//   time complexity:-  O(nk) time 
-//   space complexity:- O(nk) space
+    return profit2;
+}
+ 
+
+    var price = [ 7, 2, 4, 8, 7];
+    var n = price.length;
+     
+    console.log("Maximum Profit = " + maxProfit(price, n));
+
+
+    // Time complexity: O(N) 
+    // Auxiliary Space: O(1)

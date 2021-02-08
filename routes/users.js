@@ -1,3 +1,4 @@
+// Registration for user
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -7,7 +8,12 @@ const {check, validationResult} = require('express-validator');
 
 const User = require('../models/User');
 
-router.post(
+// @route     POST api/users
+// @desc      Regiter a user
+// @access    Public
+// This Goona check the the deatil
+
+router.post(  
   '/',
   [
     check('name', 'Please add name')
@@ -25,23 +31,27 @@ router.post(
       return res.status(400).json({errors: errors.array()});
     }
 
-    const {name, email, password} = req.body;
+    const {name, email, password} = req.body; //destructing 
 
     try {
-      let user = await User.findOne({email});
+      let user = await User.findOne({email}); // to check if user already exist
 
       if (user) {
         return res.status(400).json({msg: 'User already exists'});
       }
 
-      user = new User({
+      user = new User({  // if does not exist create new user
         name,
         email,
         password,
       });
 
-      const salt = await bcrypt.genSalt(10);
+      // before saving it on database we have hash the password  with bcrypt
+      // to encrypt the password we are using salt for decrypt we have gensalt and it return promise
+      //10 is default This just basically determines how secure the password. 
+      const salt = await bcrypt.genSalt(10); 
 
+      // then we can take that salt and we can hash the password.
       user.password = await bcrypt.hash(password, salt);
 
       await user.save();
@@ -51,12 +61,13 @@ router.post(
           id: user.id,
         },
       };
+// send back a  Jason web token to user. 
 
       jwt.sign(
         payload,
         config.get('jwtSecret'),
         {
-          expiresIn: 360000,
+          expiresIn: 360000, //we can set our token to expire. all though it is not necessary
         },
         (err, token) => {
           if (err) throw err;
