@@ -20,5 +20,5 @@ app.use('/api/user-routes', require('./routes/user-routes'));
 app.use('/api/manager-dish', require('./routes/manager-dish'));
 //Listening to server
 app.listen(3000, err => {
-    console.log(`Listening to port 3000...`);
+    console.log(`Listening to port 3000`);
 });
